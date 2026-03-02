@@ -1,0 +1,5 @@
+# service-registry/it-springboot-services.yaml
+services:
+  - service_name: web-service
+    repo_url: git@github.com:rxummadi/web-service.git
+    env: it1

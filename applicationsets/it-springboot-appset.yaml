@@ -1,0 +1,51 @@
+# applicationsets/it-springboot-appset.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: it-springboot-services
+  namespace: argocd
+spec:
+  generators:
+    - matrix:
+        generators:
+          # Finds all service repos that have helm-values/it* folders
+          - git:
+              repoURL: https://github.com/rxummadi/gitops-umbrella-charts.git
+              revision: HEAD
+              files:
+                - path: "service-registry/it-springboot-services.yaml"
+          - list:
+              elementsYaml: "{{ services | toJson }}"
+  template:
+    metadata:
+      name: "{{ service_name }}-{{ env }}"
+      annotations:
+        argocd.argoproj.io/sync-wave: "0"
+    spec:
+      project: default
+      sources:
+        # Source 1: The umbrella chart from GitHub Pages
+        - repoURL: https://rxummadi.github.io/helm-charts/
+          chart: springboot-bundle
+          targetRevision: "1.0.0"               # ← single version pin for ALL services
+          helm:
+            releaseName: "{{ service_name }}"
+            valueFiles:
+              - $values/values/values.yaml
+
+        # Source 2: Service values from app repo (ref only)
+        # - repoURL: "{{ repo_url }}"
+        #   targetRevision: HEAD
+        #   ref: values
+
+      destination:
+        server: https://it-cluster.your-org.com
+        namespace: "{{ service_name }}-{{ env }}"
+
+      syncPolicy:
+        automated:                               # AUTO SYNC for IT ✅
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true

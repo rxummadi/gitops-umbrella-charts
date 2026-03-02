@@ -1,0 +1,16 @@
+apiVersion: v2
+name: springboot-bundle
+description: Umbrella chart for all SpringBoot microservices
+type: application
+version: "1.0.0"               # bump this when any dependency changes
+
+dependencies:
+  - name: application-chart
+    version: "0.1.0"           # replace with your actual chart version
+    repository: "https://rxummadi.github.io/helm-charts/"
+    condition: app.enabled
+
+  - name: istio-routes
+    version: "0.1.0"           # replace with your actual chart version
+    repository: "https://rxummadi.github.io/helm-charts/"
+    condition: istio.enabled

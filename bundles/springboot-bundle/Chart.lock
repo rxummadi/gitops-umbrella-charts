@@ -1,0 +1,9 @@
+dependencies:
+- name: application-chart
+  repository: https://rxummadi.github.io/helm-charts/
+  version: 0.1.0
+- name: istio-routes
+  repository: https://rxummadi.github.io/helm-charts/
+  version: 0.1.0
+digest: sha256:445624567703b6e8665fc4de92a789f8447b38c525c9fb68d1174c25bc2e7a16
+generated: "2026-03-01T22:22:46.300776-06:00"
