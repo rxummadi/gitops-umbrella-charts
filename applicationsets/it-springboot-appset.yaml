@@ -14,8 +14,7 @@ spec:
               revision: HEAD
               files:
                 - path: "service-registry/it-springboot-services.yaml"
-          - list:
-              elementsYaml: "{{ services | toJson }}"
+
   template:
     metadata:
       name: "{{ service_name }}"
