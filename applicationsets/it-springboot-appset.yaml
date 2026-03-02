@@ -30,7 +30,7 @@ spec:
             valueFiles:
               - $values/values/values.yaml
   
-        - repoURL: https://github.com/rxummadi/web-service.git
+        - repoURL: "{{repo_url}}" 
           targetRevision: HEAD
           ref: values               
 
