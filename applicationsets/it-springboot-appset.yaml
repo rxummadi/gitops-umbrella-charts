@@ -6,14 +6,12 @@ metadata:
   namespace: argocd
 spec:
   generators:
-    - matrix:
-        generators:
-          # Finds all service repos that have helm-values/it* folders
-          - git:
-              repoURL: https://github.com/rxummadi/gitops-umbrella-charts.git
-              revision: HEAD
-              files:
-                - path: "service-registry/it-springboot-services.yaml"
+    - git:                                      # ← directly here, no matrix wrapper
+        repoURL: https://github.com/rxummadi/gitops-umbrella-charts.git
+        revision: HEAD
+        files:
+          - path: "service-registry/it-springboot-services.yaml"
+
 
   template:
     metadata:
@@ -31,9 +29,13 @@ spec:
             releaseName: "{{ service_name }}"
             valueFiles:
               - $values/values/values.yaml
+  
+        - repoURL: https://github.com/rxummadi/web-service.git
+          targetRevision: HEAD
+          ref: values               
 
       destination:
-        server: https://it-cluster.your-org.com
+        server: https://kubernetes.default.svc
         namespace: "{{ env }}"
 
       syncPolicy:

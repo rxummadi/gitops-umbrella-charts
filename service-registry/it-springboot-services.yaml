@@ -2,3 +2,15 @@
 - service_name: web-service
   repo_url: https://github.com/rxummadi/web-service.git
   env: it1
+
+- service_name: payment-service
+  repo_url: https://github.com/rxummadi/payment-service.git
+  env: it1
+
+- service_name: notification-service
+  repo_url: https://github.com/rxummadi/notification-service.git
+  env: it1
+
+- service_name: order-service
+  repo_url: https://github.com/rxummadi/order-service.git
+  env: it1
