@@ -18,7 +18,7 @@ spec:
               elementsYaml: "{{ services | toJson }}"
   template:
     metadata:
-      name: "{{ service_name }}-{{ env }}"
+      name: "{{ service_name }}"
       annotations:
         argocd.argoproj.io/sync-wave: "0"
     spec:
@@ -33,14 +33,9 @@ spec:
             valueFiles:
               - $values/values/values.yaml
 
-        # Source 2: Service values from app repo (ref only)
-        # - repoURL: "{{ repo_url }}"
-        #   targetRevision: HEAD
-        #   ref: values
-
       destination:
         server: https://it-cluster.your-org.com
-        namespace: "{{ service_name }}-{{ env }}"
+        namespace: "{{ env }}"
 
       syncPolicy:
         automated:                               # AUTO SYNC for IT ✅
